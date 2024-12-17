@@ -16,6 +16,11 @@ export default defineConfig({
     mkcert(),
   ],
   publicDir: './public',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: true
+  },
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
