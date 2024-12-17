@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 *.pem
+
+.env
+.env.*
+!.env.example

@@ -45,6 +45,10 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .upload-button {
@@ -113,4 +117,5 @@
   height: 100%;
   object-fit: contain;
   border-radius: 8px;
+  pointer-events: none;
 } 

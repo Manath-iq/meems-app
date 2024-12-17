@@ -16,10 +16,9 @@ export function DraggableText({ text, color, position, isSelected, onClick, onPo
     return Math.atan2(point.y - center.y, point.x - center.x) * (180 / Math.PI);
   };
 
-  const handleTouchStart = (e, type) => {
+  const handleMouseStart = (e, type) => {
     e.stopPropagation();
-    const touch = e.touches[0];
-    startPosRef.current = { x: touch.clientX, y: touch.clientY };
+    startPosRef.current = { x: e.clientX, y: e.clientY };
     startScaleRef.current = scale;
 
     if (type === 'move') {
@@ -31,22 +30,20 @@ export function DraggableText({ text, color, position, isSelected, onClick, onPo
         x: rect.left + rect.width / 2,
         y: rect.top + rect.height / 2
       };
-      startAngleRef.current = calculateAngle(center, { x: touch.clientX, y: touch.clientY });
+      startAngleRef.current = calculateAngle(center, { x: e.clientX, y: e.clientY });
     }
   };
 
   useEffect(() => {
-    const handleTouchMove = (e) => {
+    const handleMouseMove = (e) => {
       if (!isDragging && !isResizing) return;
       e.preventDefault();
       
-      const touch = e.touches[0];
-      
       if (isDragging) {
-        const newX = position.x + (touch.clientX - startPosRef.current.x);
-        const newY = position.y + (touch.clientY - startPosRef.current.y);
+        const newX = position.x + (e.clientX - startPosRef.current.x);
+        const newY = position.y + (e.clientY - startPosRef.current.y);
         onPositionChange({ x: newX, y: newY });
-        startPosRef.current = { x: touch.clientX, y: touch.clientY };
+        startPosRef.current = { x: e.clientX, y: e.clientY };
       }
       
       if (isResizing) {
@@ -56,14 +53,14 @@ export function DraggableText({ text, color, position, isSelected, onClick, onPo
           y: rect.top + rect.height / 2
         };
         
-        const currentAngle = calculateAngle(center, { x: touch.clientX, y: touch.clientY });
+        const currentAngle = calculateAngle(center, { x: e.clientX, y: e.clientY });
         const angleDiff = currentAngle - startAngleRef.current;
         setRotation(prev => prev + angleDiff);
         startAngleRef.current = currentAngle;
 
         const distance = Math.hypot(
-          touch.clientX - center.x,
-          touch.clientY - center.y
+          e.clientX - center.x,
+          e.clientY - center.y
         );
         const initialDistance = Math.hypot(
           startPosRef.current.x - center.x,
@@ -75,17 +72,17 @@ export function DraggableText({ text, color, position, isSelected, onClick, onPo
       }
     };
 
-    const handleTouchEnd = () => {
+    const handleMouseUp = () => {
       setIsDragging(false);
       setIsResizing(false);
     };
 
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDragging, isResizing, position, onPositionChange]);
 
@@ -110,7 +107,8 @@ export function DraggableText({ text, color, position, isSelected, onClick, onPo
       >
         <div 
           className="text-box" 
-          onTouchStart={(e) => handleTouchStart(e, 'move')}
+          onTouchStart={(e) => handleMouseStart(e, 'move')}
+          onMouseDown={(e) => handleMouseStart(e, 'move')}
         >
           <div 
             ref={textRef}
@@ -124,11 +122,13 @@ export function DraggableText({ text, color, position, isSelected, onClick, onPo
           <>
             <div 
               className="resize-handle left"
-              onTouchStart={(e) => handleTouchStart(e, 'resize')}
+              onTouchStart={(e) => handleMouseStart(e, 'resize')}
+              onMouseDown={(e) => handleMouseStart(e, 'resize')}
             />
             <div 
               className="resize-handle right"
-              onTouchStart={(e) => handleTouchStart(e, 'resize')}
+              onTouchStart={(e) => handleMouseStart(e, 'resize')}
+              onMouseDown={(e) => handleMouseStart(e, 'resize')}
             />
           </>
         )}
