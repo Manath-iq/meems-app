@@ -1,0 +1,39 @@
+.gallery-page {
+    padding: 16px;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+  }
+
+  .gallery-page::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  
+  .memes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  
+  .meme-item {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: var(--tg-theme-secondary-bg-color);
+    cursor: pointer;
+  }
+  
+  .meme-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+  }
+  
+  .meme-item:hover img {
+    transform: scale(1.05);
+  }

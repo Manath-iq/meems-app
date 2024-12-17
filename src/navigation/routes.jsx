@@ -3,6 +3,8 @@ import { InitDataPage } from '@/pages/InitDataPage.jsx';
 import { LaunchParamsPage } from '@/pages/LaunchParamsPage.jsx';
 import { ThemeParamsPage } from '@/pages/ThemeParamsPage.jsx';
 import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage.jsx';
+import { UploadPage } from '@/pages/EditPage/UploadPage.jsx';
+import { GalleryPage } from '@/pages/GalleryPage/GalleryPage.jsx';
 
 /**
  * @typedef {object} Route
@@ -16,7 +18,8 @@ import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage.jsx';
  * @type {Route[]}
  */
 export const routes = [
-  { path: '/', Component: IndexPage },
+  { path: '/', Component: UploadPage },
+  { path: '/gallery', Component: GalleryPage },
   { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
   { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
   { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
