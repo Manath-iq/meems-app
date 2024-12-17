@@ -5,18 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import './GalleryPage.css';
 
 // Импортируем изображения
-import meme1 from '/memes/meme1.jpg';
-import meme2 from '/memes/meme2.jpg';
-import meme3 from '/memes/meme3.jpg';
-import meme4 from '/memes/meme4.jpg';
-import meme5 from '/memes/meme5.jpg';
-import meme6 from '/memes/meme6.jpg';
-import meme7 from '/memes/meme7.jpg';
-import meme8 from '/memes/meme8.jpg';
-import meme9 from '/memes/meme9.jpg';
-import meme10 from '/memes/meme10.jpg';
-import meme11 from '/memes/meme11.jpg';
-import meme12 from '/memes/meme12.jpg';
+const meme1 = '/meems-app/memes/meme1.jpg';
+const meme2 = '/meems-app/memes/meme2.jpg';
+const meme3 = '/meems-app/memes/meme3.jpg';
+const meme4 = '/meems-app/memes/meme4.jpg';
+const meme5 = '/meems-app/memes/meme5.jpg';
+const meme6 = '/meems-app/memes/meme6.jpg';
+const meme7 = '/meems-app/memes/meme7.jpg';
+const meme8 = '/meems-app/memes/meme8.jpg';
+const meme9 = '/meems-app/memes/meme9.jpg';
+const meme10 = '/meems-app/memes/meme10.jpg';
+const meme11 = '/meems-app/memes/meme11.jpg';
+const meme12 = '/meems-app/memes/meme12.jpg';
 
 const mockMemes = [
   { id: 1, name: 'Drake Hotline Bling', image: meme1 },
