@@ -20,6 +20,13 @@ export function UploadPage() {
   const [isNewText, setIsNewText] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
+  useEffect(() => {
+    // Инициализация Telegram WebApp
+    if (window.Telegram?.WebApp) {
+      Telegram.WebApp.ready();
+    }
+  }, []);
+
   const handleTextChange = (e) => {
     const newText = e.target.value;
     setCurrentText(newText);
@@ -94,32 +101,46 @@ export function UploadPage() {
 
   const handleSaveImage = async () => {
     if (!imageContainerRef.current) return;
-
+  
     try {
       setIsSaving(true);
       const prevSelectedId = selectedTextId;
       setSelectedTextId(null);
-
+  
       await new Promise(resolve => setTimeout(resolve, 300));
-
+  
       const canvas = await html2canvas(imageContainerRef.current, {
         useCORS: true,
         scale: 2,
         backgroundColor: null,
       });
-
+  
       setIsSaving(false);
       setSelectedTextId(prevSelectedId);
-
+  
       canvas.toBlob((blob) => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'meme.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        if (window.Telegram?.WebApp) {
+          // Используем Telegram SDK для скачивания
+          const file = new File([blob], "meme.png", { type: "image/png" });
+          const url = URL.createObjectURL(file);
+  
+          Telegram.WebApp.downloadFile({
+            url,
+            file_name: "meme.png",
+          });
+  
+          URL.revokeObjectURL(url);
+        } else {
+          // Альтернативное сохранение для браузера
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'meme.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
       }, 'image/png');
     } catch (error) {
       console.error('Ошибка при сохранении изображения:', error);
